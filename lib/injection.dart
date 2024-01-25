@@ -4,6 +4,7 @@ import 'package:random_quote_generator/data/datasources/random_quote_remote_data
 import 'package:random_quote_generator/data/repositories/quote_repo_impl.dart';
 import 'package:random_quote_generator/domain/repositories/random_quote_repo.dart';
 import 'package:random_quote_generator/domain/usecases/random_quote_usecase.dart';
+import 'package:http/http.dart' as http;
 
 final sl = GetIt.I; // sl = Service Locator
 
@@ -17,6 +18,10 @@ Future<void> init() async {
   // ! data layer
   sl.registerFactory<RandomQuoteRepo>(
       () => QuoteRepoImpl(randomRemoteQuoteDatasource: sl()));
-  sl.registerSingleton<RandomRemoteQuoteDatasource>(
-      RandomRemoteQuoteDatasourceImpl());
+
+  sl.registerFactory<RandomRemoteQuoteDatasource>(
+      () => RandomRemoteQuoteDatasourceImpl(client: sl()));
+
+  // ! external
+  sl.registerFactory(() => http.Client());
 }
