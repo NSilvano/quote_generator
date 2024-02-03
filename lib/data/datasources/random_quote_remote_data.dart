@@ -10,10 +10,13 @@ abstract class RandomRemoteQuoteDatasource {
 }
 
 class RandomRemoteQuoteDatasourceImpl implements RandomRemoteQuoteDatasource {
+  final http.Client client;
+
+  RandomRemoteQuoteDatasourceImpl({required this.client});
   @override
   Future<RandomQuoteDTO> getRandomQuoteFromApi() async {
-    final url = Uri.https('api.quotable.io', '/random');
-    final response = await http.get(url, headers: {
+    final response =
+        await client.get(Uri.parse('https://api.quotable.io/random'), headers: {
       'Content-Type': 'application/json',
     });
     if (response.statusCode != 200) {
