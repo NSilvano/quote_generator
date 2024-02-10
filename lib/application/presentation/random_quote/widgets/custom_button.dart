@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:random_quote_generator/application/presentation/random_quote/bloc/random_quote_bloc.dart';
 
 class CustomButton extends StatelessWidget {
-  const CustomButton({super.key});
+  const CustomButton({required this.onTap, super.key});
+
+  final Function() onTap;
 
   @override
   Widget build(BuildContext context) {
     return InkResponse(
-      onTap: () => {
-        BlocProvider.of<RandomQuoteBloc>(context)
-            .add(const RandomQuoteEvent.quoteRequested())
-      },
+      onTap: () => onTap.call(),
       child: Material(
         elevation: 20,
         borderRadius: BorderRadius.circular(15),

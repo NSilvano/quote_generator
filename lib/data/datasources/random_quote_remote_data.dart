@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:random_quote_generator/data/exceptions/exceptions.dart';
 
@@ -23,6 +24,7 @@ class RandomRemoteQuoteDatasourceImpl implements RandomRemoteQuoteDatasource {
       throw ServerException();
     } else {
       final responseBody = json.decode(response.body);
+      debugPrint(responseBody);
       return RandomQuoteDTO.fromJson(responseBody);
     }
   }

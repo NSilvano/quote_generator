@@ -70,12 +70,15 @@ class RandomQuotePage extends StatelessWidget {
               },
             )),
           ),
-          const SizedBox(
+          SizedBox(
             height: 200,
             child: Center(
-              child: CustomButton(),
+              child: CustomButton(onTap: () {
+                BlocProvider.of<RandomQuoteBloc>(context)
+                    .add(const RandomQuoteEvent.quoteRequested());
+              }),
             ),
-          ),
+          )
         ]),
       ),
     );
